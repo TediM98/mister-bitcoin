@@ -1,0 +1,97 @@
+.contact-index {
+  .contact-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 8px;
+
+    p {
+      font-size: 16px;
+      color: whitesmoke;
+    }
+
+    input[type='text'] {
+      width: 40%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: rgb(255, 132, 0);
+        box-shadow: 0 0 5px rgb(248, 173, 93);
+      }
+    }
+  }
+
+  .contact-list {
+    margin-block: 1em;
+    padding: 10px;
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+      gap: 20px;
+      padding: 5px;
+    }
+
+    li {
+      border: 1px solid white;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transform: scale(1.03);
+        border-color: rgb(248, 173, 93);
+      }
+    }
+
+    .name,
+    .email,
+    .phone {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      overflow-x: hidden;
+
+      svg {
+        fill: rgb(255, 132, 0);
+      }
+    }
+
+    .name p,
+    .email p,
+    .phone p {
+      color: whitesmoke;
+      margin-left: 10px;
+    }
+
+    .name p {
+      font-weight: bold;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 5px;
+      justify-content: end;
+
+      svg {
+        fill: rgb(255, 199, 139);
+      }
+
+      &:hover {
+        .action-item {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

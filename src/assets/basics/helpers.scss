@@ -1,0 +1,24 @@
+// Flex
+.flex {
+  display: flex;
+}
+.inline-flex {
+  display: inline-flex;
+}
+
+// List
+.clean-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clean-btn {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
