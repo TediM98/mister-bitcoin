@@ -9,6 +9,10 @@
   max-width: 500px;
   margin: 3rem auto;
 
+  svg {
+    fill: $clr1;
+  }
+
   img.contact-avatar {
     width: 120px;
     height: 120px;
@@ -26,7 +30,7 @@
 
     v-icon {
       margin-right: 10px;
-      color: rgb(248, 173, 93);
+      color: $clr1-light;
     }
 
     p {
@@ -39,7 +43,7 @@
   .prev-btn {
     padding: 10px 20px;
     border: none;
-    background-color: rgb(248, 173, 93);
+    background-color: $clr1-light;
     color: #fff;
     font-size: 1em;
     border-radius: 5px;
@@ -48,7 +52,7 @@
     margin-top: 20px;
 
     &:hover {
-      background-color: darken(hsla(160, 100%, 37%, 1), 10%);
+      background-color: $clr1;
     }
   }
 }

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../pages/HomeView.vue'
 import ContactIndex from '../pages/ContactIndex.vue'
 import ContactDetails from '../pages/ContactDetails.vue'
+import ContactEdit from '../pages/ContactEdit.vue'
 import Chart from '../pages/Chart.vue'
 
 const router = createRouter({
@@ -23,18 +24,23 @@ const router = createRouter({
       component: ContactDetails,
     },
     {
+      path: '/contact/edit/:id?',
+      name: 'edit',
+      component: ContactEdit,
+    },
+    {
       path: '/stats',
       name: 'stats',
       component: Chart,
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../pages/AboutView.vue'),
-    },
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../pages/AboutView.vue'),
+    // },
   ],
 })
 

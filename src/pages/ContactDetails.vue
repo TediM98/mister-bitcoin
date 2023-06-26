@@ -30,7 +30,7 @@ export default {
   },
   async created() {
     const contactId = this.$route.params.id
-    this.contact = await contactService.getContactById(contactId)
+    this.contact = await contactService.getById(contactId)
   },
 }
 </script>

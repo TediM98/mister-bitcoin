@@ -3,25 +3,27 @@
     <h1>Bitcoin Stats</h1>
     <div v-if="priceHistory && avgBlockSize">
       <BarChart :chartData="priceHistoryData" />
-      <BarChart :chartData="avgBlockSizeData" />
+      <div class="avg-block-chart-container">
+        <BarChart :chartData="avgBlockSizeData" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { bitcoinService } from "../services/bitcoin.service";
-import BarChart from "../cmps/Charts/BarChart.vue";
+import { bitcoinService } from '../services/bitcoin.service'
+import BarChart from '../cmps/Charts/BarChart.vue'
 
 export default {
   data() {
     return {
       priceHistory: null,
       avgBlockSize: null,
-    };
+    }
   },
   async created() {
-    this.priceHistory = await bitcoinService.getMarketPriceHistory();
-    this.avgBlockSize = await bitcoinService.getAvgBlockSize();
+    this.priceHistory = await bitcoinService.getMarketPriceHistory()
+    this.avgBlockSize = await bitcoinService.getAvgBlockSize()
   },
   components: { BarChart },
 
@@ -29,38 +31,50 @@ export default {
     priceHistoryData() {
       return {
         labels: this.priceHistory.values.map((dataSample) => {
-          let date = dataSample.x;
-          date = new Date(date * 1000);
-          return date.toISOString().split("T")[0];
+          let date = dataSample.x
+          date = new Date(date * 1000)
+          return date.toISOString().split('T')[0]
           // `${date.getDate() + 1}.${date.getMonth() + 1}`
         }),
         datasets: [
           {
-            label: "Average USD market price across major bitcoin exchanges.",
-            backgroundColor: "#01BD7E",
+            label: 'Average USD market price across major bitcoin exchanges.',
+            backgroundColor: '#01BD7E',
             data: this.priceHistory.values.map((dataSample) => dataSample.y),
           },
         ],
-      };
+      }
     },
     avgBlockSizeData() {
       return {
         labels: this.avgBlockSize.values.map((dataSample) => {
-          let date = dataSample.x;
-          date = new Date(date * 1000);
-          return date.toISOString().split("T")[0];
+          let date = dataSample.x
+          date = new Date(date * 1000)
+          return date.toISOString().split('T')[0]
         }),
         datasets: [
           {
-            label: "The average block size in MB.",
-            backgroundColor: "#01BD7E",
+            label: 'The average block size in MB.',
+            backgroundColor: '#01BD7E',
             data: this.avgBlockSize.values.map((dataSample) => dataSample.y),
           },
         ],
-      };
+      }
     },
   },
-};
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.chart-container {
+  width: 50vw;
+  margin: 0 auto;
+  h1 {
+    text-align: center;
+  }
+
+  .avg-block-chart-container {
+    padding-top: 50px;
+  }
+}
+</style>

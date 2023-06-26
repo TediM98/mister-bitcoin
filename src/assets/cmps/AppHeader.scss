@@ -1,7 +1,7 @@
 .app-header nav {
   display: flex;
   justify-content: space-between;
-  height: 8vh;
+  height: 5vh;
 
   .left {
     display: flex;
@@ -13,7 +13,7 @@
       color: white;
     }
     .router-link-active {
-      color: rgb(255, 132, 0);
+      color: $clr1;
       position: relative;
 
       &::after {
@@ -23,7 +23,7 @@
         bottom: -5px;
         width: 100%;
         height: 2px;
-        background-color: rgb(255, 132, 0);
+        background-color: $clr1;
       }
     }
   }
@@ -46,7 +46,7 @@
       width: 35px;
       height: 35px;
       border-radius: 50%;
-      background: rgb(248, 173, 93);
+      background: $clr1-light;
       color: white;
       display: flex;
       align-items: center;

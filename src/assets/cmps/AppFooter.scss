@@ -2,8 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 100%;
+  padding-inline: 2em;
   height: 5vh;
   padding-inline: 1em;
   background-color: rgb(20, 20, 20);
+
+  p {
+    margin-inline: auto;
+  }
 }

@@ -1,6 +1,7 @@
 <template>
   <div class="contact-index main-layout">
     <h1>Contacts</h1>
+    <RouterLink to="/contact/edit"><button>Add Contact</button></RouterLink>
     <ContactFilter @filter="onSetFilterBy" />
     <ContactList
       @remove="removeContact"
@@ -11,47 +12,48 @@
 </template>
 
 <script>
-import { contactService } from "../services/contact.service.js";
-import { eventBus } from "../services/eventBus.service.js";
-import ContactList from "../cmps/ContactList.vue";
-import ContactFilter from "../cmps/ContactFilter.vue";
+import { contactService } from '../services/contact.service.js'
+import { eventBus } from '../services/eventBus.service.js'
+import ContactList from '../cmps/ContactList.vue'
+import ContactFilter from '../cmps/ContactFilter.vue'
 
 export default {
   data() {
     return {
       contacts: null,
       filterBy: {},
-    };
+    }
   },
   async created() {
-    this.contacts = await contactService.getContacts();
+    this.contacts = await contactService.query()
   },
   components: { ContactList, ContactFilter },
 
   methods: {
     async removeContact(contactId) {
       const msg = {
-        txt: `Contact ${contactId} removed...`,
-        type: "success",
-        timeout: 2500,
-      };
-      const newContactsArray = await contactService.deleteContact(contactId);
-      this.contacts = [...newContactsArray];
-      console.log("msg:", msg);
-
-      eventBus.emit("user-msg", msg);
+        txt: ' Contact ${contactId} removed...',
+        type: 'success',
+      }
+      await contactService.remove(contactId)
+      const idx = this.contacts.findIndex(
+        (contact) => contact._id === contactId
+      )
+      this.contacts.splice(idx, 1)
+      eventBus.emit('user-msg', msg)
     },
+
     onSetFilterBy(filterBy) {
-      this.filterBy = filterBy;
+      this.filterBy = filterBy
     },
   },
   computed: {
     filteredContacts() {
-      const regex = new RegExp(this.filterBy.txt, "i");
-      return this.contacts.filter((contact) => regex.test(contact.name));
+      const regex = new RegExp(this.filterBy.txt, 'i')
+      return this.contacts.filter((contact) => regex.test(contact.name))
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped></style>

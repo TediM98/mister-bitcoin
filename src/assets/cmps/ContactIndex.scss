@@ -23,8 +23,8 @@
       transition: border-color 0.3s ease;
 
       &:focus {
-        border-color: rgb(255, 132, 0);
-        box-shadow: 0 0 5px rgb(248, 173, 93);
+        border-color: $clr1;
+        box-shadow: 0 0 5px $clr1-light;
       }
     }
   }
@@ -49,7 +49,7 @@
       &:hover {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         transform: scale(1.03);
-        border-color: rgb(248, 173, 93);
+        border-color: $clr1-light;
       }
     }
 
@@ -62,7 +62,7 @@
       overflow-x: hidden;
 
       svg {
-        fill: rgb(255, 132, 0);
+        fill: $clr1;
       }
     }
 
@@ -83,7 +83,11 @@
       justify-content: end;
 
       svg {
-        fill: rgb(255, 199, 139);
+        fill: $clr1-light;
+
+        &:hover {
+          fill: $clr1;
+        }
       }
 
       &:hover {

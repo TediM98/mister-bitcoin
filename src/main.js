@@ -12,6 +12,7 @@ import {
   RiContactsLine,
   MdDeleteoutline,
   LaInfoCircleSolid,
+  MdModeeditOutlined
 } from 'oh-vue-icons/icons'
 
 addIcons(
@@ -20,7 +21,8 @@ addIcons(
   RiContactsLine,
   BiTelephone,
   MdEmailOutlined,
-  LaInfoCircleSolid
+  LaInfoCircleSolid,
+  MdModeeditOutlined
 )
 
 const app = createApp(App)
