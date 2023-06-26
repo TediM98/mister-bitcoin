@@ -2,7 +2,7 @@
   <header class="app-header">
     <nav>
       <div class="left">
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/home">Home</RouterLink>
         <!-- <RouterLink to="/about">About</RouterLink> -->
         <RouterLink to="/contact">Contacts</RouterLink>
         <RouterLink to="/stats">Chart</RouterLink>
@@ -11,9 +11,9 @@
       <div v-if="user && exchgRate" class="right">
         <div class="quick-stats">1 USD = {{ this.exchgRate }} BTC</div>
         <div>Logged in as: {{ this.user.name }}</div>
-        <div class="avatar">
+        <!-- <div class="avatar">
           <span class="initials">J.C</span>
-        </div>
+        </div> -->
       </div>
     </nav>
   </header>
@@ -31,7 +31,8 @@ export default {
     }
   },
   async created() {
-    this.user = await userService.getUser()
+    const loggedInUser = await userService.getUser()
+    this.user = loggedInUser
     this.exchgRate = await bitcoinService.getRate()
     // this.presentName()
   },

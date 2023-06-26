@@ -44,8 +44,9 @@ export default {
       try {
         await contactService.save(this.contact)
         this.$router.push('/contact')
+        showSuccessMsg('New contact has been saved')
       } catch (err) {
-        showErrorMsg('Cannot save contact')
+        showErrorMsg('Could not save contact')
       }
     },
     async loadContact() {

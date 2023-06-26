@@ -3,6 +3,8 @@ import HomeView from '../pages/HomeView.vue'
 import ContactIndex from '../pages/ContactIndex.vue'
 import ContactDetails from '../pages/ContactDetails.vue'
 import ContactEdit from '../pages/ContactEdit.vue'
+import SignUpForm from '../pages/SignUpForm.vue'
+import TransferFunds from '../pages/TransferFunds.vue'
 import Chart from '../pages/Chart.vue'
 
 const router = createRouter({
@@ -10,6 +12,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'signup',
+      component: SignUpForm,
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView,
     },
@@ -22,6 +29,12 @@ const router = createRouter({
       path: '/contact/:id',
       name: 'details',
       component: ContactDetails,
+      children: [
+        {
+          path: '/contact/:id/transaction',
+          component: TransferFunds
+        },
+      ]
     },
     {
       path: '/contact/edit/:id?',
