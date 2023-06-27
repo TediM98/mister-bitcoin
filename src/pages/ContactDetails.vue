@@ -19,7 +19,9 @@
     <RouterLink class="prev-btn" to="/contact">Back</RouterLink>
   </article>
   <section class="transaction-container">
-    <RouterLink to="/contact/:id/transaction">Make transaction</RouterLink>
+    <RouterLink :to="`/contact/${contact._id}/transaction`"
+      >Make transaction</RouterLink
+    >
     <RouterView />
   </section>
 </template>

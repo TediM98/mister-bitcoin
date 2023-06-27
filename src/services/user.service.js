@@ -19,8 +19,11 @@
 //   return user
 // }
 
+import { utilService } from '../services/util.service.js'
+import { ref } from 'vue'
+
 const USER_KEY = 'user_db'
-let user
+let user = ref(null)
 
 export const userService = {
   // login,
@@ -39,7 +42,12 @@ function getUser() {
   //     resolve(user)
   //   }, 1000)
   // })
-  return JSON.parse(sessionStorage.getItem('user'))
+  // return JSON.parse(sessionStorage.getItem('user'))
+  if (!user.value) {
+    const storedUser = JSON.parse(sessionStorage.getItem('user'))
+    user.value = storedUser
+  }
+  return user
 }
 
 // function login(username) {
@@ -72,7 +80,7 @@ function _saveUser(user) {
 }
 
 function transferFunds(toId, to, amount) {
-  const user = JSON.parse(localStorage.getItem(USER_KEY))
+  user = utilService.loadFromStorage(USER_KEY)
   if (user) {
     const transaction = {
       toId,
@@ -80,15 +88,71 @@ function transferFunds(toId, to, amount) {
       at: Date.now(),
       amount,
     }
+    user.balance -= amount
+    if (user.balance < 0) {
+      return
+    }
     user.transactions.push(transaction)
     _saveUser(user)
+    sessionStorage.setItem("user", JSON.stringify(user))
   }
 }
 
+
 function getTransactions() {
-  const user = JSON.parse(localStorage.getItem(USER_KEY))
+  user = utilService.loadFromStorage(USER_KEY)
   if (user) {
     return user.transactions
   }
   return []
 }
+
+// import { ref } from 'vue';
+// import { utilService } from '../services/util.service.js'
+
+// const USER_KEY = 'user_db'
+// const user = ref(utilService.loadFromStorage(USER_KEY))
+
+// function updateUser(userData) {
+//   user.value = userData
+// }
+
+// export const userService = {
+//   getUser,
+//   transferFunds,
+// }
+
+// function getUser() {
+//   return user.value
+// }
+
+// function transferFunds(toId, to, amount) {
+//   const currentUser = user.value
+//   if (currentUser) {
+//     const transaction = {
+//       toId,
+//       to,
+//       at: Date.now(),
+//       amount,
+//     }
+//     currentUser.balance -= amount
+//     if (currentUser.balance < 0) {
+//       return
+//     }
+//     currentUser.transactions.push(transaction)
+//     _saveUser(currentUser)
+//     updateUser(currentUser)
+//   }
+// }
+
+// function _saveUser(user) {
+//   utilService.saveToStorage(USER_KEY, user)
+// }
+
+// function getTransactions() {
+//   user = utilService.loadFromStorage(USER_KEY)
+//   if (user) {
+//     return user.transactions
+//   }
+//   return []
+// }

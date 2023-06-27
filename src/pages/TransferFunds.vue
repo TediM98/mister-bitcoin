@@ -1,6 +1,7 @@
 <template>
   <div class="transfer-funds">
     <h2>Transfer Funds</h2>
+    <div v-if="user && user.balance">{{ formattedBalance }} BitCoin left</div>
     <form @submit.prevent="transfer">
       <label for="amount">Amount:</label>
       <input type="number" v-model="amount" required />
@@ -10,9 +11,10 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { userService } from '@/services/user.service'
 import { showSuccessMsg, showErrorMsg } from '@/services/eventBus.service.js'
+import { contactService } from '@/services/contact.service.js'
 
 export default {
   name: 'TransferFunds',
@@ -26,30 +28,48 @@ export default {
       required: true,
     },
   },
+
   setup(props) {
+    const user = ref(null)
     const amount = ref('')
 
-    const transfer = () => {
-      const transferAmount = parseFloat(amount.value)
-      if (isNaN(transferAmount) || transferAmount <= 0) {
-        showErrorMsg('Please enter a valid transfer amount.')
+    const transfer = async () => {
+      if (!user.value) {
+        showErrorMsg('User data is not available.')
         return
       }
 
-      userService.transferFunds(
+      const transferAmount = parseFloat(amount.value)
+      if (transferAmount <= 0 || user.value.balance < transferAmount) {
+        showErrorMsg('Please enter a valid transfer amount.')
+        return
+      }
+      await userService.transferFunds(
         props.contactId,
         props.contactName,
         transferAmount
       )
-      showSuccessMsg('Transaction Completed!')
-
-      console.log(amount.value)
+      showSuccessMsg('The transfer succeeded')
+      user.value = await userService.getUser()
       amount.value = ''
     }
 
+    onMounted(async () => {
+      user.value = await userService.getUser()
+    })
+
+    const formattedBalance = computed(() => {
+      if (user.value.balance) {
+        return `${user.value.balance} BitCoin`
+      }
+      return ''
+    })
+
     return {
+      user,
       amount,
       transfer,
+      formattedBalance,
     }
   },
 }
@@ -83,12 +103,13 @@ input {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-block-end: 10px;
 }
 
 button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #00bd7e;
+  background-color: rgb(248, 173, 93);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -96,6 +117,6 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: rgb(255, 132, 0);
 }
 </style>

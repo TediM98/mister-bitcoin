@@ -9,6 +9,10 @@
       <div class="balance-desc">
         <p>Your balance is: {{ this.user.balance }}</p>
         <v-icon class="bitcoin-logo" name="bi-currency-bitcoin" scale="1.8" />
+
+        <div class="last-transactions" v-if="user.value.transactions">
+          <TransactionList :transactions="user.value.transactions" />
+        </div>
       </div>
 
       <h2>Currently 1 USD is worth {{ this.exchgRate }} BTC</h2>
@@ -20,6 +24,8 @@ BiCurrencyBitcoin
 import { userService } from '../services/user.service.js'
 import { bitcoinService } from '../services/bitcoin.service.js'
 import Hero from '../cmps/Hero.vue'
+import TransactionList from '../cmps/TransactionList.vue'
+
 export default {
   data() {
     return {
@@ -33,7 +39,10 @@ export default {
   },
 
   methods: {},
-  components: { Hero },
+  components: {
+    Hero,
+    TransactionList,
+  },
 }
 </script>
 
